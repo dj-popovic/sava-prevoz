@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transport Express - Selidbe i Transport</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 0.8rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+            max-width: 200px;
+            object-fit: contain;
+        }
+
+        /* Fallback text logo if image fails to load */
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e74c3c;
+            display: none;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-menu a:hover {
+            color: #e74c3c;
+        }
+
+        /* Mobile menu - Poboljšano centriranje */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 8px;
+            position: relative;
+            width: 30px;
+            height: 30px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hamburger span {
+            width: 22px;
+            height: 2px;
+            background: #333;
+            margin: 2px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+            position: absolute;
+        }
+
+        .hamburger span:nth-child(1) {
+            top: 8px;
+        }
+
+        .hamburger span:nth-child(2) {
+            top: 14px;
+        }
+
+        .hamburger span:nth-child(3) {
+            top: 20px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg);
+            top: 14px;
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg);
+            top: 14px;
+        }
+
+        /* Hero Section - Updated for image background */
+        .hero {
+            height: 100vh;
+            background: url('images/heroimg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        /* Dark overlay for hero image */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 85%;
+            padding: 1.5rem;
+            background: rgba(0,0,0,0.3);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            margin-bottom: 0.8rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-btn {
+            background: #e74c3c;
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .hero-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Sections - Smanjeni padding */
+        .section {
+            padding: 3rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+            margin-bottom: 0.8rem;
+            color: #2c3e50;
+            position: relative;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+            color: #7f8c8d;
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: #e74c3c;
+            border-radius: 2px;
+        }
+
+        /* Services Grid - Kompaktnije */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border-left: 4px solid #e74c3c;
+            text-align: center;
+            height: fit-content;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+            display: block;
+            color: #2c3e50;
+        }
+
+        .service-card h3 {
+            font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+            margin-bottom: 0.8rem;
+            color: #2c3e50;
+        }
+
+        .service-card p {
+            color: #7f8c8d;
+            line-height: 1.6;
+            font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+            margin-bottom: 0.8rem;
+        }
+
+        .service-card ul {
+            list-style: none;
+            margin-top: 0.8rem;
+        }
+
+        .service-card ul li {
+            padding: 0.2rem 0;
+            color: #7f8c8d;
+            font-size: clamp(0.75rem, 1.6vw, 0.85rem);
+        }
+
+        .service-card ul li::before {
+            content: '✓';
+            color: #27ae60;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        /* About Section */
+        .about {
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            padding: 20px;
+        }
+
+        .about-text {
+            font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+            line-height: 1.7;
+            color: #555;
+        }
+
+        .about-features {
+            display: grid;
+            gap: 1.2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 1.8rem;
+            width: 50px;
+            height: 50px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: #2c3e50;
+            padding-top: 4px;
+        }
+
+        .feature-item h4 {
+            font-size: clamp(0.9rem, 1.8vw, 1rem);
+            color: #2c3e50;
+            margin-bottom: 0.2rem;
+        }
+
+        .feature-item p {
+            color: #7f8c8d;
+            font-size: clamp(0.75rem, 1.6vw, 0.85rem);
+        }
+
+        /* Image Slider - Updated for real images */
+        .image-slider {
+            position: relative;
+            max-width: 100%;
+            margin: 1.5rem auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: clamp(300px, 45vw, 500px);
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .slide-content {
+            text-align: center;
+            color: white;
+            z-index: 3;
+            padding: 1.5rem;
+        }
+
+        .slide-content h3 {
+            font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+            margin-bottom: 0.8rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+
+        .slide-content p {
+            font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+            max-width: 500px;
+        }
+
+        /* Slider Navigation */
+        .slider-nav {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .nav-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 1.3rem;
+            padding: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider-arrow:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .slider-arrow.prev {
+            left: 15px;
+        }
+
+        .slider-arrow.next {
+            right: 15px;
+        }
+
+        /* Team Section - Kompaktnije */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            justify-content: center;
+            justify-items: center;
+        }
+
+        .team-member {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            width: 100%;
+            max-width: 350px;
+            min-width: 280px;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #e74c3c, #f39c12);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            margin: 0 auto 1.2rem;
+            font-weight: bold;
+        }
+
+        .team-member h3 {
+            font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+            margin-bottom: 0.4rem;
+            color: #2c3e50;
+        }
+
+        .team-member .role {
+            color: #e74c3c;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            font-size: clamp(0.75rem, 1.6vw, 0.85rem);
+        }
+
+        .team-member .contact {
+            color: #7f8c8d;
+            line-height: 1.5;
+            font-size: clamp(0.75rem, 1.6vw, 0.85rem);
+        }
+
+        .team-member .contact strong {
+            color: #2c3e50;
+        }
+
+        /* Contact Section - Smanjeno */
+        .contact-section {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+            margin: 0;
+            width: 99.45vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+        }
+
+        .contact-section .section-title {
+            color: white;
+        }
+
+        .contact-section .section-title::after {
+            background: #e74c3c;
+        }
+
+        .contact-btn {
+            background: #e74c3c;
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: clamp(1rem, 2.2vw, 1.2rem);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
+            margin-top: 1.5rem;
+        }
+
+        .contact-btn:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(231, 76, 60, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: #1a252f;
+            color: white;
+            padding: 2.5rem 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 0.8rem;
+            color: #e74c3c;
+            font-size: 1.1rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #bdc3c7;
+            text-decoration: none;
+            line-height: 1.6;
+            font-size: clamp(0.75rem, 1.6vw, 0.85rem);
+        }
+
+        .footer-section a:hover {
+            color: #e74c3c;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #34495e;
+            color: #bdc3c7;
+            font-size: 0.85rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 64px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 2rem;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0,0,0,0.05);
+                height: 52%;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-menu li {
+                margin: 1rem 0;
+            }
+            
+            .nav-menu a {
+                font-size: 1.1rem;
+            }
+
+            .hero{
+                height: 78vh;
+                background-attachment: scroll;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .slider-arrow {
+                width: 35px;
+                height: 35px;
+                font-size: 1.1rem;
+            }
+            
+            .slider-arrow.prev {
+                left: 8px;
+            }
+            
+            .slider-arrow.next {
+                right: 8px;
+            }
+
+            .section {
+                padding: 2.5rem 1rem;
+            }
+
+            .footer-content{
+                text-align: center;
+            }
+        }
+
+        /* Small Mobile */
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+            
+            .section {
+                padding: 2rem 1rem;
+            }
+            
+            .services-grid {
+                gap: 0.8rem;
+            }
+            
+            .service-card {
+                padding: 1.2rem;
+            }
+            
+            .hero-content {
+                padding: 1.2rem;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Add margin top for sections to account for fixed nav */
+        .section:not(.hero) {
+            padding-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="images/logo.png" alt="Transport Express Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div class="logo-text">🚛 Transport Express</div>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#hero">Početna</a></li>
+                <li><a href="#services">Usluge</a></li>
+                <li><a href="#about">O nama</a></li>
+                <li><a href="#team">Tim</a></li>
+                <li><a href="#contact">Kontakt</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1>Transport Express</h1>
+            <p>Profesionalne usluge transporta, selidbi i uklanjanja otpada</p>
+            <button class="hero-btn" onclick="document.getElementById('services').scrollIntoView()">
+                Pogledajte Usluge
+            </button>
+        </div>
+    </section>
+
+    <section id="services" class="section">
+        <h2 class="section-title">Naše Usluge</h2>
+        <p class="section-subtitle">Pružamo kompletan spektar transportnih usluga sa profesionalnim pristupom</p>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <span class="service-icon"><i class="fa-solid fa-box-open"></i></span>
+                <h3>Selidbe i Iseljenja</h3>
+                <p>Kompletne usluge selidbi za privatne i poslovne klijente sa pažljivim rukovanjem.</p>
+                <ul>
+                    <li>Pakovanje i zaštita stvari</li>
+                    <li>Demontaža i montaža nameštaja</li>
+                    <li>Osiguranje tokom selidbe</li>
+                    <li>Privremeno skladištenje</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <span class="service-icon"><i class="fa-solid fa-trash"></i></span>
+                <h3>Uklanjanje Otpada</h3>
+                <p>Ekološki odgovorno uklanjanje različitih vrsta otpada iz stanova, kuća i firmi.</p>
+                <ul>
+                    <li>Krupni otpad</li>
+                    <li>Građevinski otpad</li>
+                    <li>Nameštaj i aparati</li>
+                    <li>Recikliranje materijala</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <span class="service-icon"><i class="fa-solid fa-house"></i></span>
+                <h3>Čišćenje Prostorija</h3>
+                <p>Kompletno uklanjanje nepotrebnih stvari iz podruma, tavana i garaža.</p>
+                <ul>
+                    <li>Sortiranje stvari</li>
+                    <li>Uklanjanje starog nameštaja</li>
+                    <li>Čišćenje prostora</li>
+                    <li>Donacija upotrebljivih stvari</li>
+                </ul>
+            </div>
+
+            <div class="service-card">
+                <span class="service-icon"><i class="fa-solid fa-bolt"></i></span>
+                <h3>Hitne Intervencije</h3>
+                <p>Dostupni smo 24/7 za hitne transportne usluge i selidbe u kratkom roku.</p>
+                <ul>
+                    <li>24/7 dostupnost</li>
+                    <li>Brz odziv</li>
+                    <li>Vikend usluge</li>
+                    <li>Noćni transport</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about section">
+        <h2 class="section-title">O Nama</h2>
+        <p class="section-subtitle">Više od 20 godina iskustva u transportnim uslugama</p>
+        
+        <div class="about-content">
+            <div class="about-text">
+                <p>Transport Express je vodeća kompanija u oblasti transporta i selidbi u Novom Sadu. Osnovani 2000. godine, stekli smo poverenje preko 5000 zadovoljnih klijenata.</p>
+                
+                <p>Naš tim čine iskusni profesionalci koji pristupaju svakom poslu sa maksimalnom pažnjom i odgovornošću. Koristimo moderna vozila i kvalitetnu opremu kako bismo garantovali sigurnost vaše imovine.</p>
+                
+                <p>Ponosni smo na našu reputaciju pouzdane kompanije koja uvek drži reč i poštuje dogovorene rokove.</p>
+            </div>
+            
+            <div class="about-features">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fa-solid fa-trophy"></i></div>
+                    <div>
+                        <h4>20+ Godina Iskustva</h4>
+                        <p>Dugogodišnje iskustvo u transportu</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
+                    <div>
+                        <h4>5000+ Zadovoljnih Klijenata</h4>
+                        <p>Poverenje velikog broja klijenata</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fa-solid fa-shield"></i></div>
+                    <div>
+                        <h4>Potpuno Osigurani</h4>
+                        <p>Sva vozila i roba su osigurani</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fa-solid fa-clock"></i></div>
+                    <div>
+                        <h4>24/7 Dostupnost</h4>
+                        <p>Tu smo kada nam trebate</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Image Slider -->
+        <div class="image-slider">
+            <div class="slider-container">
+                <div class="slide active">
+                    <img src="images/image1.png" alt="Profesionalne Selidbe" onerror="this.style.display='none';">
+                    <div class="slide-overlay">
+                        <div class="slide-content">
+                            <h3>Profesionalne Selidbe</h3>
+                            <p>Pažljivo rukovanje sa vašim stvarima, od pakovanja do kompletne montaže na novoj lokaciji</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide">
+                    <img src="images/image2.png" alt="Brz Transport" onerror="this.style.display='none';">
+                    <div class="slide-overlay">
+                        <div class="slide-content">
+                            <h3>Brz Transport</h3>
+                            <p>Savremena flota kamiona za brzu i sigurnu dostavu robe po celoj Srbiji</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide">
+                    <img src="images/image3.png" alt="Uklanjanje Otpada" onerror="this.style.display='none';">
+                    <div class="slide-overlay">
+                        <div class="slide-content">
+                            <h3>Uklanjanje Otpada</h3>
+                            <p>Ekološki odgovorno uklanjanje svih vrsta otpada i čišćenje prostora</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide">
+                    <img src="images/image4.png" alt="Poslovne Usluge" onerror="this.style.display='none';">
+                    <div class="slide-overlay">
+                        <div class="slide-content">
+                            <h3>Poslovne Usluge</h3>
+                            <p>Specijalizovani za selidbe firmi, kancelarija i poslovnih prostora</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation arrows -->
+            <button class="slider-arrow prev" onclick="changeSlide(-1)">‹</button>
+            <button class="slider-arrow next" onclick="changeSlide(1)">›</button>
+
+            <!-- Navigation dots -->
+            <div class="slider-nav">
+                <span class="nav-dot active" onclick="currentSlide(1)"></span>
+                <span class="nav-dot" onclick="currentSlide(2)"></span>
+                <span class="nav-dot" onclick="currentSlide(3)"></span>
+                <span class="nav-dot" onclick="currentSlide(4)"></span>
+            </div>
+        </div>
+    </section>
+
+    <section id="team" class="section">
+        <h2 class="section-title">Naš Tim</h2>
+        <p class="section-subtitle">Upoznajte naše iskusne profesionalce</p>
+        
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="member-avatar">S</div>
+                <h3>Sava Aleksandrović</h3>
+                <div class="role">Osnivač</div>
+                <div class="contact">
+                    <strong>Telefon:</strong> +381 60 123 4567<br>
+                    <strong>Email:</strong> milos@transportexpress.rs<br>
+                    <strong>Radno vreme:</strong> 00:00 - 24:00
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="contact" class="contact-section">
+        <h2 class="section-title">Kontaktirajte Nas</h2>
+        <p class="section-subtitle">Spremni smo da odgovorimo na sva vaša pitanja i damo ponudu</p>
+        
+        <button class="contact-btn" onclick="window.open('kontakt.html', '_blank')">
+            Informativna ponuda
+        </button>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Sava Prevoz</h4>
+                <p>Vaš pouzdan partner za transport i selidbe u Novom Sadu.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Kontakt</h4>
+                <p><i class="fa-solid fa-phone"></i>  +381 60 123 4567</p>
+                <p><i class="fa-solid fa-inbox"></i>  info@transportexpress.rs</p>
+                <p><i class="fa-solid fa-location-dot"></i>  Novi Sad, Vojvodina</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Radno Vreme</h4>
+                <p>Ponedeljak - Nedelja: 00:00 - 24:00</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Sava Prevoz. Sva prava zadržana.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Image Slider Functionality
+        let currentSlideIndex = 0;
+        let slides, dots, totalSlides;
+        let sliderInterval;
+
+        function initializeSlider() {
+            slides = document.querySelectorAll('.slide');
+            dots = document.querySelectorAll('.nav-dot');
+            totalSlides = slides.length;
+
+            if (slides.length > 0) {
+                showSlide(0);
+                // Auto-advance slider every 5 seconds
+                sliderInterval = setInterval(function() {
+                    changeSlide(1);
+                }, 5000);
+            }
+        }
+
+        function showSlide(index) {
+            if (!slides || !dots) return;
+            
+            // Remove active class from all slides and dots
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            // Add active class to current slide and dot
+            if (slides[index] && dots[index]) {
+                slides[index].classList.add('active');
+                dots[index].classList.add('active');
+            }
+        }
+
+        function changeSlide(direction) {
+            currentSlideIndex += direction;
+            
+            if (currentSlideIndex >= totalSlides) {
+                currentSlideIndex = 0;
+            } else if (currentSlideIndex < 0) {
+                currentSlideIndex = totalSlides - 1;
+            }
+            
+            showSlide(currentSlideIndex);
+        }
+
+        function currentSlide(index) {
+            currentSlideIndex = index - 1;
+            showSlide(currentSlideIndex);
+        }
+
+        // Smooth scrolling for navigation
+        function smoothScrollTo(targetId) {
+            const targetSection = document.querySelector(targetId);
+            if (targetSection) {
+                const offsetTop = targetSection.offsetTop - 10;
+                
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize slider
+            initializeSlider();
+            
+            // Setup navigation smooth scrolling
+            document.querySelectorAll('nav a[href^="#"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    smoothScrollTo(targetId);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

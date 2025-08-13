@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt - Transport Express</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c3e50, #7f8c8d);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            opacity: 0.9;
+        }
+
+        .back-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: clamp(0.9rem, 1.8vw, 1rem);
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-info {
+            background: rgba(255,255,255,0.95);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .contact-info h2 {
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .info-item:hover {
+            transform: translateX(10px);
+        }
+
+        .info-icon {
+            font-size: 2rem;
+            width: 60px;
+            height: 60px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+            color: #2c3e50;
+        }
+
+        .info-content h3 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+        }
+
+        .info-content p {
+            color: #7f8c8d;
+            font-size: clamp(0.9rem, 1.8vw, 1rem);
+            line-height: 1.6;
+        }
+
+        .form-container {
+            background: rgba(255,255,255,0.95);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .form-container h2 {
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: clamp(0.9rem, 1.8vw, 1rem);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            font-size: clamp(0.9rem, 1.8vw, 1rem);
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #e74c3c;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+            background: white;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .urgency-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .urgency-option {
+            padding: 1rem;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .urgency-option:hover {
+            border-color: #e74c3c;
+            background: white;
+        }
+
+        .urgency-option.selected {
+            border-color: #e74c3c;
+            background: #e74c3c;
+            color: white;
+        }
+
+        .urgency-option .icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .urgency-option .label {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .urgency-option .time {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 1.2rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.3);
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(231, 76, 60, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .map-section {
+            background: rgba(255,255,255,0.95);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .map-section h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        .map-placeholder {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            height: 300px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7f8c8d;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin-top: 1rem;
+            border: 2px dashed #dee2e6;
+        }
+
+        .setup-info {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border: 2px solid #f39c12;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .setup-info h3 {
+            color: #d68910;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .setup-info code {
+            background: #e67e22;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .setup-info p {
+            color: #b7950b;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .urgency-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-info, .form-container, .map-section {
+                padding: 2rem;
+            }
+            
+            .info-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .info-icon {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-btn" onclick="window.open('index.html', '_blank')"> POČETNA </button>
+        
+        <div class="header">
+            <h1>Kontakt</h1>
+            <p>Zatražite besplatanu ponudu ili nas kontaktirajte za bilo koje pitanje</p>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h2>Kontakt Informacije</h2>
+                
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
+                    <div class="info-content">
+                        <h3>Telefoni</h3>
+                        <p>+381 60 123 4567 (Sava - Osnivač)</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-solid fa-inbox"></i></div>
+                    <div class="info-content">
+                        <h3>Email</h3>
+                        <p>info@transportexpress.rs</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <div class="info-content">
+                        <h3>Adresa</h3>
+                        <p>Bulevar Oslobođenja 123<br>
+                           21000 Novi Sad<br>
+                           Vojvodina, Srbija</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-solid fa-clock"></i></div>
+                    <div class="info-content">
+                        <h3>Radno Vreme</h3>
+                        <p>Ponedeljak - Nedelja: 00:00 - 24:00<br>
+                           <strong>Hitne intervencije: 24/7</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-container">
+                <h2>Informativna ponuda</h2>
+                
+                <form action="https://formsubmit.co/djordje5503@gmail.com" method="POST" id="contactForm">
+                    <!-- FormSubmit konfiguracija -->
+                    <input type="hidden" name="_subject" value="Nova ponuda zahtev - Transport Express">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_next" value="thank-you.html">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Ime i prezime *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Broj telefona *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email adresa</label>
+                        <input type="email" id="email" name="email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="service">Potrebna usluga *</label>
+                        <select id="service" name="service" required>
+                            <option value="">Izaberite uslugu</option>
+                            <option value="transport">Transport manjim kamionima</option>
+                            <option value="selidbe">Selidbe i iseljenja</option>
+                            <option value="otpad">Uklanjanje otpada</option>
+                            <option value="ciscenje">Čišćenje podruma/tavana</option>
+                            <option value="hitno">Hitna intervencija</option>
+                            <option value="poslovno">Poslovna selidba</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="from">Odakle (adresa)</label>
+                            <input type="text" id="from" name="from" placeholder="Ulica i broj, grad">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="to">Dokle (adresa)</label>
+                            <input type="text" id="to" name="to" placeholder="Ulica i broj, grad">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="date">Željeni datum</label>
+                            <input type="date" id="date" name="date">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="time">Željeno vreme</label>
+                            <input type="time" id="time" name="time">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Hitnost posla</label>
+                        <div class="urgency-options">
+                            <div class="urgency-option" onclick="selectUrgency(this, 'standard')">
+                                <div class="icon"><i class="fa-solid fa-calendar-days"></i></div>
+                                <div class="label">Standardno</div>
+                                <div class="time">5-7 dana</div>
+                            </div>
+                            <div class="urgency-option" onclick="selectUrgency(this, 'urgent')">
+                                <div class="icon"><i class="fa-solid fa-bolt"></i></div>
+                                <div class="label">Hitno</div>
+                                <div class="time">1-2 dana</div>
+                            </div>
+                            <div class="urgency-option" onclick="selectUrgency(this, 'emergency')">
+                                <div class="icon"><i class="fa-solid fa-exclamation"></i></div>
+                                <div class="label">Odmah</div>
+                                <div class="time">Isti dan</div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="urgency" id="urgencyField" value="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Dodatne informacije</label>
+                        <textarea id="message" name="message" placeholder="Opišite detalje posla - veličina, težina, broj kutija, posebni zahtevi, broj spratova, da li ima lift, parking mogućnosti..."></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Zatražite Predračun</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function selectUrgency(element, value) {
+            document.querySelectorAll('.urgency-option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            // Store the value in hidden field
+            document.getElementById('urgencyField').value = value;
+        }
+
+        // Set minimum date to today
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('date').setAttribute('min', today);
+        });
+
+        // Form validation
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            const required = this.querySelectorAll('[required]');
+            let isValid = true;
+            
+            required.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = '#e74c3c';
+                } else {
+                    field.style.borderColor = '#ecf0f1';
+                }
+            });
+            
+            if (!isValid) {
+                e.preventDefault();
+                alert('Molimo popunite sva obavezna polja označena sa *');
+            }
+        });
+
+        // Navbar background change on scroll
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (nav && window.scrollY > 100) {
+                nav.style.background = 'rgba(255, 255, 255, 0.98)';
+                nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+            } else if (nav) {
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

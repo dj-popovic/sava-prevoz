@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hvala Vam - Transport Express</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c3e50, #7f8c8d);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: clamp(0.9rem, 1.8vw, 1rem);
+            cursor: pointer;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .thank-you-card {
+            background: rgba(255,255,255,0.95);
+            padding: 4rem 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .thank-you-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .success-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            animation: successPulse 2s ease-in-out infinite;
+            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.3);
+        }
+
+        .success-icon i {
+            font-size: 3rem;
+            color: white;
+        }
+
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .thank-you-card h1 {
+            color: #2c3e50;
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .thank-you-card .subtitle {
+            color: #7f8c8d;
+            font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .info-boxes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid #e74c3c;
+            transition: transform 0.3s ease;
+        }
+
+        .info-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .info-box-icon {
+            font-size: 2.5rem;
+            color: #e74c3c;
+            margin-bottom: 1rem;
+        }
+
+        .info-box h3 {
+            color: #2c3e50;
+            font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .info-box p {
+            color: #7f8c8d;
+            font-size: clamp(0.9rem, 1.8vw, 1rem);
+            line-height: 1.6;
+        }
+
+        .contact-reminder {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border: 2px solid #f39c12;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .contact-reminder h3 {
+            color: #d68910;
+            margin-bottom: 1rem;
+            font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-reminder p {
+            color: #b7950b;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: clamp(0.9rem, 1.8vw, 1rem);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(231, 76, 60, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.9);
+            color: #2c3e50;
+            border: 2px solid #ecf0f1;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            border-color: #e74c3c;
+            color: #e74c3c;
+            transform: translateY(-2px);
+        }
+
+        .social-links {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #ecf0f1;
+        }
+
+        .social-links h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            background: #f8f9fa;
+            border: 2px solid #ecf0f1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            background: #e74c3c;
+            border-color: #e74c3c;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+                align-items: flex-start;
+                padding-top: 2rem;
+            }
+
+            .thank-you-card {
+                padding: 3rem 2rem;
+            }
+
+            .info-boxes {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .social-icons {
+                gap: 0.5rem;
+            }
+        }
+
+        /* Loading animation for page entrance */
+        .thank-you-card {
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-btn" onclick="window.open('index.html', '_blank')"> POČETNA </button>
+        
+        <div class="thank-you-card">
+            <div class="success-icon">
+                <i class="fa-solid fa-check"></i>
+            </div>
+
+            <h1>Hvala Vam!</h1>
+            <p class="subtitle">
+                Vaš zahtev za predračun je uspešno poslat. Naš tim će analizirati sve detalje i kontaktirati vas sa detaljnom ponudom.
+            </p>
+
+            <div class="info-boxes">
+                <div class="info-box">
+                    <div class="info-box-icon">
+                        <i class="fa-solid fa-calculator"></i>
+                    </div>
+                    <h3>Precizna Ponuda</h3>
+                    <p>Na osnovu vaših podataka pripremićemo <strong>detaljnu ponudu</strong> sa svim troškovima i opcijama bez skrivenih dodatnih naknada.</p>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-box-icon">
+                        <i class="fa-solid fa-handshake"></i>
+                    </div>
+                    <h3>Profesionalna Usluga</h3>
+                    <p>Garantujemo <strong>profesionalan pristup</strong>, pouzdanost i potpunu brigu za vaše stvari tokom celog procesa.</p>
+                </div>
+            </div>
+
+            <div class="contact-reminder">
+                <h3>
+                    Potrebna hitna intervencija?
+                </h3>
+                <p><strong>Pozovite nas direktno:</strong></p>
+                <p><i class="fa-solid fa-phone"></i> +381 60 123 4567 (Sava - Osnivač)</p>
+                <p><i class="fa-solid fa-inbox"></i> hitno@transportexpress.rs</p>
+            </div>
+
+            <div class="action-buttons">
+                <a href="index.html" class="btn btn-primary">
+                    <i class="fa-solid fa-home"></i> Povratak na Početnu
+                </a>
+                <a href="kontakt.html" class="btn btn-secondary">
+                    <i class="fa-solid fa-envelope"></i> Pošaljite Još Jedan Zahtev
+                </a>
+            </div>
+
+            <div class="social-links">
+                <h3>Pratite nas na društvenim mrežama</h3>
+                <div class="social-icons">
+                    <a href="#" class="social-icon" title="Facebook">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon" title="Instagram">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-icon" title="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="social-icon" title="Viber">
+                        <i class="fa-brands fa-viber"></i>
+                    </a>
+                    <a href="#" class="social-icon" title="WhatsApp">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto redirect after 30 seconds (optional)
+        let countdown = 30;
+        let redirectTimer;
+
+        function startRedirectCountdown() {
+            redirectTimer = setTimeout(() => {
+                window.location.href = 'index.html';
+            }, countdown * 1000);
+        }
+
+        // Uncomment the line below if you want auto-redirect
+        // startRedirectCountdown();
+
+        // Add some interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click sound effect to buttons (optional)
+            const buttons = document.querySelectorAll('.btn, .back-btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // You can add a subtle click effect here if needed
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 100);
+                });
+            });
+
+            // Add floating animation to success icon
+            const successIcon = document.querySelector('.success-icon');
+            setInterval(() => {
+                successIcon.style.transform = 'translateY(-5px)';
+                setTimeout(() => {
+                    successIcon.style.transform = 'translateY(0)';
+                }, 1000);
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
