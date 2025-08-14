@@ -554,14 +554,12 @@
             background: linear-gradient(135deg, #2c3e50, #34495e);
             color: white;
             text-align: center;
-            padding: 3rem 1rem;
+            padding: 3rem 0;
             margin: 0;
-            width: 99.45vw;
+            width: 100vw;
             position: relative;
             left: 50%;
-            right: 50%;
-            margin-left: -50vw;
-            margin-right: -50vw;
+            transform: translateX(-50%); /* Koristi transform umesto margin negativnih vrednosti */
         }
 
         .contact-section .section-title {
@@ -570,6 +568,10 @@
 
         .contact-section .section-title::after {
             background: #e74c3c;
+        }
+
+         .contact-section .section-subtitle {
+            padding: 0 1rem;
         }
 
         .contact-btn {
@@ -641,20 +643,19 @@
             
             .nav-menu {
                 position: fixed;
-                top: 70px; /* Povećano sa 64px */
+                top: 70px;
                 left: -100%;
                 width: 100%;
                 background: white;
                 flex-direction: column;
                 justify-content: flex-start;
                 align-items: center;
-                padding: 2rem 0; /* Dodato više paddinga */
+                padding: 2rem 0;
                 transition: 0.3s;
                 box-shadow: 0 10px 27px rgba(0,0,0,0.05);
-                /* UKLONJENA OGRANIČENA VISINA - ovo je bio problem */
-                min-height: 300px; /* Minimalna visina umesto fiksne */
-                max-height: calc(100vh - 70px); /* Maksimalna visina */
-                overflow-y: auto; /* Scroll ako je potrebno */
+                min-height: 300px;
+                max-height: calc(100vh - 70px);
+                overflow-y: auto;
             }
             
             .nav-menu.active {
@@ -1090,5 +1091,6 @@
 </body>
 
 </html>
+
 
 
