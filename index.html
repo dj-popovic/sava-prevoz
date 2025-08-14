@@ -641,18 +641,20 @@
             
             .nav-menu {
                 position: fixed;
-                top: 64px;
+                top: 70px; /* Povećano sa 64px */
                 left: -100%;
                 width: 100%;
-                height: calc(100vh - 70px);
                 background: white;
                 flex-direction: column;
                 justify-content: flex-start;
                 align-items: center;
-                padding-top: 2rem;
+                padding: 2rem 0; /* Dodato više paddinga */
                 transition: 0.3s;
                 box-shadow: 0 10px 27px rgba(0,0,0,0.05);
-                height: 52%;
+                /* UKLONJENA OGRANIČENA VISINA - ovo je bio problem */
+                min-height: 300px; /* Minimalna visina umesto fiksne */
+                max-height: calc(100vh - 70px); /* Maksimalna visina */
+                overflow-y: auto; /* Scroll ako je potrebno */
             }
             
             .nav-menu.active {
@@ -660,7 +662,9 @@
             }
             
             .nav-menu li {
-                margin: 1rem 0;
+                margin: 1.5rem 0; /* Povećano rastojanje */
+                width: 100%;
+                text-align: center;
             }
             
             .nav-menu a {
@@ -1086,3 +1090,4 @@
 </body>
 
 </html>
+
